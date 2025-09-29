@@ -106,7 +106,7 @@ class Scale {
 
   /// get all notes in the scale
   List<Note> get notes => [
-    root,
-    ...intervals.map((final semitones) => Note(midiNumber: root.midiNumber + semitones, velocity: root.velocity)),
-  ];
+        root,
+        ...intervals.map((final semitones) => Note(midiNumber: root.midiNumber + semitones, velocity: root.velocity)),
+      ];
 }

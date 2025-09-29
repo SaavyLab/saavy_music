@@ -1,3 +1,8 @@
+## 0.3.2
+
+* compat: relaxed Dart SDK constraint to support all 3.x releases (`>=3.0.0 <4.0.0`)
+* compat: broadened `meta` and `collection` dependency ranges to cover wider 1.x compatibility
+
 ## 0.3.1
 
 * docs: rewrote `README.md` to a neutral, concise tone; removed emojis/marketing language

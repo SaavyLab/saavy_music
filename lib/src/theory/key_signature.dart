@@ -34,11 +34,11 @@ class _SpellingCandidate {
   final int diatonicDistance;
 
   _SpellingCandidate withAccidentalOffset(final int offset) => _SpellingCandidate(
-    noteName: noteName,
-    accidentalOffset: offset,
-    octave: octave,
-    diatonicDistance: diatonicDistance,
-  );
+        noteName: noteName,
+        accidentalOffset: offset,
+        octave: octave,
+        diatonicDistance: diatonicDistance,
+      );
 }
 
 extension ScaleModeX on ScaleMode {

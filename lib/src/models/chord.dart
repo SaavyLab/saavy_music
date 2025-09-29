@@ -8,10 +8,10 @@ import 'package:saavy_music/src/models/note.dart';
 @immutable
 class Chord {
   Chord({required this.root, required final List<Interval> intervals, this.inversion = 0, final String? name})
-    : intervals = List<Interval>.unmodifiable(
-        (List<Interval>.from(intervals)..sort((final a, final b) => a.semitones.compareTo(b.semitones))),
-      ),
-      _name = name {
+      : intervals = List<Interval>.unmodifiable(
+          (List<Interval>.from(intervals)..sort((final a, final b) => a.semitones.compareTo(b.semitones))),
+        ),
+        _name = name {
     if (inversion < 0 || inversion >= (intervals.length + 1)) {
       throw ArgumentError('Inversion level must be between 0 and ${intervals.length}');
     }
@@ -88,7 +88,7 @@ class Chord {
 
   /// Optional chord name (e.g., "Cmaj7", "Dm/F#")
   String get name {
-    if (_name != null) return _name;
+    if (_name != null) return _name!;
 
     final String baseName = root.name;
     final String suffix = intervals.map((final i) => i.shortName).join('-'); // Simple default

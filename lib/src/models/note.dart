@@ -9,12 +9,12 @@ enum NoteName { c, d, e, f, g, a, b }
 @immutable
 class Note {
   const Note({required this.midiNumber, this.velocity = 80, this.explicitNoteName, this.explicitAccidental})
-    : assert(midiNumber >= 0 && midiNumber <= 127),
-      assert(velocity >= 0 && velocity <= 127),
-      assert(
-        (explicitNoteName == null) == (explicitAccidental == null),
-        'explicitNoteName and explicitAccidental must either both be null or both be provided.',
-      );
+      : assert(midiNumber >= 0 && midiNumber <= 127),
+        assert(velocity >= 0 && velocity <= 127),
+        assert(
+          (explicitNoteName == null) == (explicitAccidental == null),
+          'explicitNoteName and explicitAccidental must either both be null or both be provided.',
+        );
 
   /// Natural semitone offsets for note names.
   static const Map<NoteName, int> _naturalSemitoneOffsets = {

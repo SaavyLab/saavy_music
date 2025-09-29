@@ -115,18 +115,18 @@ class Interval {
 
   /// Common intervals used for training exercises
   static List<Interval> get commonIntervals => [
-    Interval.unison(),
-    Interval.minorSecond(),
-    Interval.majorSecond(),
-    Interval.minorThird(),
-    Interval.majorThird(),
-    Interval.perfectFourth(),
-    Interval.tritone(),
-    Interval.perfectFifth(),
-    Interval.minorSixth(),
-    Interval.majorSixth(),
-    Interval.minorSeventh(),
-    Interval.majorSeventh(),
-    Interval.octave(),
-  ];
+        Interval.unison(),
+        Interval.minorSecond(),
+        Interval.majorSecond(),
+        Interval.minorThird(),
+        Interval.majorThird(),
+        Interval.perfectFourth(),
+        Interval.tritone(),
+        Interval.perfectFifth(),
+        Interval.minorSixth(),
+        Interval.majorSixth(),
+        Interval.minorSeventh(),
+        Interval.majorSeventh(),
+        Interval.octave(),
+      ];
 }
