@@ -1,0 +1,62 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: verify credentials secret is present
+        run: |
+          if [[ -z "${PUB_CREDENTIALS}" ]]; then
+            echo 'Missing PUB_CREDENTIALS secret; add it in repository settings to enable publishing.' >&2
+            exit 1
+          fi
+        env:
+          PUB_CREDENTIALS: ${{ secrets.PUB_CREDENTIALS }}
+
+      - name: configure pub credentials
+        run: |
+          mkdir -p ~/.config/dart
+          printf '%s' "${PUB_CREDENTIALS}" > ~/.config/dart/pub-credentials.json
+        env:
+          PUB_CREDENTIALS: ${{ secrets.PUB_CREDENTIALS }}
+
+      - name: install dependencies
+        run: dart pub get
+
+      - name: ensure tag matches pubspec version
+        run: |
+          TAG_VERSION="${GITHUB_REF#refs/tags/}"
+          PUBSPEC_VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}')
+          EXPECTED_TAG="v${PUBSPEC_VERSION}"
+          if [[ "${TAG_VERSION}" != "${EXPECTED_TAG}" ]]; then
+            echo "Tag ${TAG_VERSION} does not match pubspec version ${PUBSPEC_VERSION} (expected ${EXPECTED_TAG})." >&2
+            exit 1
+          fi
+
+      - name: analyze
+        run: dart analyze
+
+      - name: test
+        run: dart test -r compact
+
+      - name: publish dry run
+        run: dart pub publish --dry-run
+
+      - name: publish to pub.dev
+        run: dart pub publish --force

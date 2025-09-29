@@ -189,4 +189,150 @@ void main() {
       expect(cbMinorKey.resolveDegree(Degrees.vii).name, 'bbb4'); // Bbb (double flat)
     });
   });
+
+  group('KeySignature - Diatonic Chord Qualities', () {
+    test('getDiatonicTriad returns correct triads for major (Ionian)', () {
+      final key = KeySignature(tonic: Note.c(4), mode: ScaleMode.ionian);
+
+      expect(key.getDiatonicTriad(Degrees.i), ChordRecipes.majorTriad); // I
+      expect(key.getDiatonicTriad(Degrees.ii), ChordRecipes.minorTriad); // ii
+      expect(key.getDiatonicTriad(Degrees.iii), ChordRecipes.minorTriad); // iii
+      expect(key.getDiatonicTriad(Degrees.iv), ChordRecipes.majorTriad); // IV
+      expect(key.getDiatonicTriad(Degrees.v), ChordRecipes.majorTriad); // V
+      expect(key.getDiatonicTriad(Degrees.vi), ChordRecipes.minorTriad); // vi
+      expect(key.getDiatonicTriad(Degrees.vii), ChordRecipes.diminishedTriad); // vii°
+    });
+
+    test('getDiatonicTriad returns correct triads for minor (Aeolian)', () {
+      final key = KeySignature(tonic: Note.a(3), mode: ScaleMode.aeolian);
+
+      expect(key.getDiatonicTriad(Degrees.i), ChordRecipes.minorTriad); // i
+      expect(key.getDiatonicTriad(Degrees.ii), ChordRecipes.diminishedTriad); // ii°
+      expect(key.getDiatonicTriad(Degrees.iii), ChordRecipes.majorTriad); // ♭III
+      expect(key.getDiatonicTriad(Degrees.iv), ChordRecipes.minorTriad); // iv
+      expect(key.getDiatonicTriad(Degrees.v), ChordRecipes.minorTriad); // v
+      expect(key.getDiatonicTriad(Degrees.vi), ChordRecipes.majorTriad); // ♭VI
+      expect(key.getDiatonicTriad(Degrees.vii), ChordRecipes.majorTriad); // ♭VII
+    });
+
+    test('getDiatonicTriad returns correct triads for Dorian', () {
+      final key = KeySignature(tonic: Note.d(4), mode: ScaleMode.dorian);
+
+      expect(key.getDiatonicTriad(Degrees.i), ChordRecipes.minorTriad); // i
+      expect(key.getDiatonicTriad(Degrees.ii), ChordRecipes.minorTriad); // ii
+      expect(key.getDiatonicTriad(Degrees.iv), ChordRecipes.majorTriad); // IV
+      expect(key.getDiatonicTriad(Degrees.v), ChordRecipes.minorTriad); // v
+      expect(key.getDiatonicTriad(Degrees.vi), ChordRecipes.diminishedTriad); // vi°
+    });
+
+    test('getDiatonicSeventh returns correct seventh chords for major (Ionian)', () {
+      final key = KeySignature(tonic: Note.c(4), mode: ScaleMode.ionian);
+
+      expect(key.getDiatonicSeventh(Degrees.i), ChordRecipes.majorSeventh); // Imaj7
+      expect(key.getDiatonicSeventh(Degrees.ii), ChordRecipes.minorSeventh); // ii7
+      expect(key.getDiatonicSeventh(Degrees.iii), ChordRecipes.minorSeventh); // iii7
+      expect(key.getDiatonicSeventh(Degrees.iv), ChordRecipes.majorSeventh); // IVmaj7
+      expect(key.getDiatonicSeventh(Degrees.v), ChordRecipes.dominantSeventh); // V7
+      expect(key.getDiatonicSeventh(Degrees.vi), ChordRecipes.minorSeventh); // vi7
+      expect(key.getDiatonicSeventh(Degrees.vii), ChordRecipes.halfDiminishedSeventh); // viiø7
+    });
+
+    test('getDiatonicSeventh returns correct seventh chords for minor (Aeolian)', () {
+      final key = KeySignature(tonic: Note.a(3), mode: ScaleMode.aeolian);
+
+      expect(key.getDiatonicSeventh(Degrees.i), ChordRecipes.minorSeventh); // im7
+      expect(key.getDiatonicSeventh(Degrees.ii), ChordRecipes.halfDiminishedSeventh); // iiø7
+      expect(key.getDiatonicSeventh(Degrees.iii), ChordRecipes.majorSeventh); // ♭IIImaj7
+      expect(key.getDiatonicSeventh(Degrees.iv), ChordRecipes.minorSeventh); // iv7
+      expect(key.getDiatonicSeventh(Degrees.v), ChordRecipes.minorSeventh); // v7
+      expect(key.getDiatonicSeventh(Degrees.vi), ChordRecipes.majorSeventh); // ♭VImaj7
+      expect(key.getDiatonicSeventh(Degrees.vii), ChordRecipes.dominantSeventh); // ♭VII7
+    });
+
+    test('getDiatonicTriad throws for degrees with accidentals', () {
+      final key = KeySignature(tonic: Note.c(4), mode: ScaleMode.ionian);
+
+      expect(
+        () => key.getDiatonicTriad(Degrees.ii.flat()),
+        throwsA(isA<ArgumentError>()),
+      );
+      expect(
+        () => key.getDiatonicTriad(Degrees.v.sharp()),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
+
+    test('getDiatonicSeventh throws for degrees with accidentals', () {
+      final key = KeySignature(tonic: Note.c(4), mode: ScaleMode.ionian);
+
+      expect(
+        () => key.getDiatonicSeventh(Degrees.ii.flat()),
+        throwsA(isA<ArgumentError>()),
+      );
+      expect(
+        () => key.getDiatonicSeventh(Degrees.v.sharp()),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
+
+    test('isDiatonic returns true for diatonic triads', () {
+      final key = KeySignature(tonic: Note.c(4), mode: ScaleMode.ionian);
+
+      expect(key.isDiatonic(Degrees.i, ChordRecipes.majorTriad), isTrue); // I
+      expect(key.isDiatonic(Degrees.ii, ChordRecipes.minorTriad), isTrue); // ii
+      expect(key.isDiatonic(Degrees.v, ChordRecipes.majorTriad), isTrue); // V
+      expect(key.isDiatonic(Degrees.vii, ChordRecipes.diminishedTriad), isTrue); // vii°
+    });
+
+    test('isDiatonic returns true for diatonic seventh chords', () {
+      final key = KeySignature(tonic: Note.c(4), mode: ScaleMode.ionian);
+
+      expect(key.isDiatonic(Degrees.i, ChordRecipes.majorSeventh), isTrue); // Imaj7
+      expect(key.isDiatonic(Degrees.ii, ChordRecipes.minorSeventh), isTrue); // ii7
+      expect(key.isDiatonic(Degrees.v, ChordRecipes.dominantSeventh), isTrue); // V7
+      expect(key.isDiatonic(Degrees.vii, ChordRecipes.halfDiminishedSeventh), isTrue); // viiø7
+    });
+
+    test('isDiatonic returns false for borrowed/chromatic chords', () {
+      final key = KeySignature(tonic: Note.c(4), mode: ScaleMode.ionian);
+
+      // v (minor five) is borrowed from minor
+      expect(key.isDiatonic(Degrees.v, ChordRecipes.minorTriad), isFalse);
+
+      // ii (major two) is borrowed
+      expect(key.isDiatonic(Degrees.ii, ChordRecipes.majorTriad), isFalse);
+
+      // IV7 (dominant seventh on four) is not diatonic in major
+      expect(key.isDiatonic(Degrees.iv, ChordRecipes.dominantSeventh), isFalse);
+    });
+
+    test('isDiatonic returns false for altered degrees (with accidentals)', () {
+      final key = KeySignature(tonic: Note.c(4), mode: ScaleMode.ionian);
+
+      // ♭II is chromatic/altered
+      expect(key.isDiatonic(Degrees.ii.flat(), ChordRecipes.majorTriad), isFalse);
+
+      // #IV is chromatic/altered
+      expect(key.isDiatonic(Degrees.iv.sharp(), ChordRecipes.majorTriad), isFalse);
+
+      // Even if the chord quality "would be right", altered degrees are not diatonic
+      expect(key.isDiatonic(Degrees.v.flat(), ChordRecipes.majorTriad), isFalse);
+    });
+
+    test('isDiatonic works correctly across all modes', () {
+      // Test Mixolydian (has dominant seventh on I, major on ♭VII)
+      final mixKey = KeySignature(tonic: Note.g(4), mode: ScaleMode.mixolydian);
+      expect(mixKey.isDiatonic(Degrees.i, ChordRecipes.majorTriad), isTrue); // I
+      expect(mixKey.isDiatonic(Degrees.i, ChordRecipes.dominantSeventh), isTrue); // I7
+      expect(mixKey.isDiatonic(Degrees.vii, ChordRecipes.majorTriad), isTrue); // ♭VII
+
+      // Test Locrian (has diminished on i)
+      final locrianKey = KeySignature(tonic: Note.b(3), mode: ScaleMode.locrian);
+      expect(locrianKey.isDiatonic(Degrees.i, ChordRecipes.diminishedTriad), isTrue); // i°
+      expect(
+        locrianKey.isDiatonic(Degrees.i, ChordRecipes.halfDiminishedSeventh),
+        isTrue,
+      ); // iø7
+    });
+  });
 }

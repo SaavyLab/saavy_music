@@ -25,6 +25,9 @@
 ## docs & versioning
 - update README examples if api changes
 - bump version in `pubspec.yaml` and add `CHANGELOG.md` entry
+- tag releases as `vX.Y.Z` (workflow auto-publishes to pub.dev)
+- keep repository secret `PUB_CREDENTIALS` synced with pub.dev credentials
+
 
 ## pr checklist
 - [ ] dart analyze passes

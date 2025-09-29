@@ -1,3 +1,13 @@
+## 0.4.0
+
+* new: added `KeySignature.getDiatonicTriad(ScaleDegree)` to return the diatonic triad quality at a given scale degree
+* new: added `KeySignature.getDiatonicSeventh(ScaleDegree)` to return the diatonic seventh chord quality at a given scale degree
+* new: added `KeySignature.isDiatonic(ScaleDegree, ChordRecipe)` to validate if a chord is diatonic at a specific degree
+* refactor: replaced hardcoded diatonic chord lookup tables with algorithmic derivation from modal interval patterns
+* refactor: mode semitone offsets now computed dynamically from rotated major scale pattern instead of hardcoded
+* improvement: more extensible architecture enables future support for non-diatonic scales (pentatonic, octatonic, etc.)
+* tests: added 13 new tests covering diatonic chord derivation across all church modes
+
 ## 0.3.2
 
 * compat: relaxed Dart SDK constraint to support all 3.x releases (`>=3.0.0 <4.0.0`)
