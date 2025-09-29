@@ -1,3 +1,7 @@
+## 0.3.1
+
+* docs: rewrote `README.md` to a neutral, concise tone; removed emojis/marketing language
+
 ## 0.3.0
 
 * new: added `ChordRecipes.minorEleventh` (`m11`) chord recipe
