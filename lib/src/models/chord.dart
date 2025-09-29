@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:meta/meta.dart';
 import 'package:saavy_music/src/models/chord_recipe.dart';
 import 'package:saavy_music/src/models/interval.dart';
 import 'package:saavy_music/src/models/note.dart';
@@ -9,7 +9,7 @@ import 'package:saavy_music/src/models/note.dart';
 class Chord {
   Chord({required this.root, required final List<Interval> intervals, this.inversion = 0, final String? name})
     : intervals = List<Interval>.unmodifiable(
-        intervals..sort((final a, final b) => a.semitones.compareTo(b.semitones)),
+        (List<Interval>.from(intervals)..sort((final a, final b) => a.semitones.compareTo(b.semitones))),
       ),
       _name = name {
     if (inversion < 0 || inversion >= (intervals.length + 1)) {

@@ -79,21 +79,21 @@ class Scale {
   factory Scale.ionian(final Note root) => Scale.major(root);
 
   factory Scale.dorian(final Note root) =>
-      Scale(root: root, intervals: [2, 3, 4, 5, 7, 9, 10], name: '${root.name} dorian');
+      Scale(root: root, intervals: [2, 3, 5, 7, 9, 10, 12], name: '${root.name} dorian');
 
   factory Scale.phrygian(final Note root) =>
-      Scale(root: root, intervals: [1, 3, 4, 5, 7, 8, 10], name: '${root.name} phrygian');
+      Scale(root: root, intervals: [1, 3, 5, 7, 8, 10, 12], name: '${root.name} phrygian');
 
   factory Scale.lydian(final Note root) =>
-      Scale(root: root, intervals: [1, 3, 4, 6, 8, 10, 11], name: '${root.name} lydian');
+      Scale(root: root, intervals: [2, 4, 6, 7, 9, 11, 12], name: '${root.name} lydian');
 
   factory Scale.mixolydian(final Note root) =>
-      Scale(root: root, intervals: [2, 4, 5, 7, 9, 10, 11], name: '${root.name} mixolydian');
+      Scale(root: root, intervals: [2, 4, 5, 7, 9, 10, 12], name: '${root.name} mixolydian');
 
   factory Scale.aeolian(final Note root) => Scale.naturalMinor(root);
 
   factory Scale.locrian(final Note root) =>
-      Scale(root: root, intervals: [1, 3, 4, 5, 7, 8, 10], name: '${root.name} locrian');
+      Scale(root: root, intervals: [1, 3, 5, 6, 8, 10, 12], name: '${root.name} locrian');
 
   /// root note of the scale
   final Note root;

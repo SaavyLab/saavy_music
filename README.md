@@ -173,7 +173,7 @@ print(cMajor.invert(1).name); // "c4maj/e4"
 ```dart
 // Extended chords
 final cmaj9 = Chord.fromRecipe(Note.c(4), ChordRecipes.majorNinth);
-final dm11 = Chord.fromRecipe(Note.d(4), ChordRecipes.perfectEleventh);
+final dm11 = Chord.fromRecipe(Note.d(4), ChordRecipes.minorEleventh);
 
 // Altered dominants
 final g7b9 = Chord.fromRecipe(Note.g(4), ChordRecipes.dominantFlatNinth);
