@@ -1,0 +1,27 @@
+name: saavy_music
+description: An opinionated, compositional, and immutable music theory library for Dart, designed for developers who think about harmony in terms of shapes and relationships.
+version: 0.2.0
+repository: https://github.com/SaavyLab/saavy_music
+homepage: https://github.com/SaavyLab/saavy_music
+documentation: https://pub.dev/documentation/saavy_music/latest/
+
+topics:
+  - music-theory
+  - ear-training
+  - education
+  - music
+  - composition
+  - harmony
+
+environment:
+  sdk: ^3.9.2
+
+# Add regular dependencies here.
+dependencies:
+  freezed_annotation: ^3.0.0
+  collection: ^1.19.0
+  # path: ^1.9.0
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.6
