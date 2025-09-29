@@ -25,6 +25,10 @@ void main() {
   customChordExample();
   print('');
 
+  // Diatonic chord qualities
+  diatonicChordExample();
+  print('');
+
   // Ear training progression generator
   earTrainingExample();
   print('');
@@ -145,6 +149,45 @@ void customChordExample() {
   print('G7alt: ${g7alt.name} → ${g7alt.notes.map((n) => n.name).join(', ')}');
 }
 
+void diatonicChordExample() {
+  print('🎼 Diatonic Chord Qualities:');
+  print('===========================');
+
+  final cMajor = KeySignature(tonic: Note.c(4), mode: ScaleMode.ionian);
+  print('Key: ${cMajor.label}');
+  print('Diatonic triads (I, ii, iii, IV, V, vi, vii°):');
+
+  final degrees = [Degrees.i, Degrees.ii, Degrees.iii, Degrees.iv, Degrees.v, Degrees.vi, Degrees.vii];
+  final romanNumerals = ['I', 'ii', 'iii', 'IV', 'V', 'vi', 'vii°'];
+
+  for (int i = 0; i < degrees.length; i++) {
+    final triad = cMajor.getDiatonicTriad(degrees[i]);
+    final seventh = cMajor.getDiatonicSeventh(degrees[i]);
+    final root = cMajor.resolveDegree(degrees[i]);
+    print('  ${romanNumerals[i]}: ${triad.displayLabel} (${Chord.fromRecipe(root, triad).name}) or '
+        '${seventh.displayLabel} (${Chord.fromRecipe(root, seventh).name})');
+  }
+
+  print('\nKey: A Natural Minor (Aeolian)');
+  final aMinor = KeySignature(tonic: Note.a(3), mode: ScaleMode.aeolian);
+  print('Diatonic triads (i, ii°, ♭III, iv, v, ♭VI, ♭VII):');
+
+  final minorNumerals = ['i', 'ii°', '♭III', 'iv', 'v', '♭VI', '♭VII'];
+  for (int i = 0; i < degrees.length; i++) {
+    final triad = aMinor.getDiatonicTriad(degrees[i]);
+    final root = aMinor.resolveDegree(degrees[i]);
+    print('  ${minorNumerals[i]}: ${triad.displayLabel} (${Chord.fromRecipe(root, triad).name})');
+  }
+
+  print('\nValidating diatonic vs borrowed chords:');
+  print('  In C Major:');
+  print('    V (G major): ${cMajor.isDiatonic(Degrees.v, ChordRecipes.majorTriad)} ✓');
+  print('    v (G minor): ${cMajor.isDiatonic(Degrees.v, ChordRecipes.minorTriad)} ✗ (borrowed from minor)');
+  print('    ii (D minor): ${cMajor.isDiatonic(Degrees.ii, ChordRecipes.minorTriad)} ✓');
+  print('    II (D major): ${cMajor.isDiatonic(Degrees.ii, ChordRecipes.majorTriad)} ✗ (borrowed/altered)');
+  print('    V7 (G7): ${cMajor.isDiatonic(Degrees.v, ChordRecipes.dominantSeventh)} ✓ (diatonic seventh)');
+}
+
 void earTrainingExample() {
   print('🎓 Ear Training Progression Generator:');
   print('====================================');
@@ -163,14 +206,10 @@ void earTrainingExample() {
     print('Key of ${key.label}:');
     for (final (progression, name) in progressions) {
       final chords = progression.map((degree) {
+        // Use the new getDiatonicTriad method to get the correct chord quality!
+        final recipe = key.getDiatonicTriad(degree);
         final root = key.resolveDegree(degree);
-        // Choose appropriate chord quality based on degree
-        return switch (degree) {
-          Degrees.i || Degrees.iv => Chord.major(root),
-          Degrees.ii || Degrees.vi => Chord.minor(root),
-          Degrees.v => Chord.dominantSeventh(root),
-          _ => Chord.major(root),
-        };
+        return Chord.fromRecipe(root, recipe);
       }).toList();
 
       print('  $name: ${chords.map((c) => c.name).join(' - ')}');
