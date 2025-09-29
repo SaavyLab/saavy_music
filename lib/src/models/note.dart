@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:meta/meta.dart';
 import 'package:saavy_music/src/theory/accidental.dart';
 
 /// Note names (A through G)

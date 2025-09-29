@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:meta/meta.dart';
 import 'package:saavy_music/src/models/note.dart';
 import 'package:saavy_music/src/theory/accidental.dart';
 import 'package:saavy_music/src/theory/scale_degree.dart';

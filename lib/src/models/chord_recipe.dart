@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:meta/meta.dart';
 import 'package:saavy_music/src/models/interval.dart';
 
 /// The quality of a triad (three-note chord) that defines its basic harmonic character.
@@ -442,6 +442,14 @@ class ChordRecipes {
     fullName: 'Minor Add Nine',
     triadQuality: TriadQuality.minor,
     extensions: {ChordExtension.majorNinth},
+  );
+
+  static const minorEleventh = ChordRecipe(
+    id: 'minor_eleventh',
+    displayLabel: 'm11',
+    fullName: 'Minor Eleventh',
+    triadQuality: TriadQuality.minor,
+    extensions: {ChordExtension.minorSeventh, ChordExtension.majorNinth, ChordExtension.perfectEleventh},
   );
 
   // ===== COLLECTIONS FOR UI =====

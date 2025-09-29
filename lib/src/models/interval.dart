@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:meta/meta.dart';
 
 const _intervals = [
   Interval.unison,
